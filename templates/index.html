@@ -13,15 +13,10 @@
   <script src="{{ STATIC_URL }}js/accounting.js"></script>
 </head>
 <body>
-
-    {% if user.is_authenticated %}
-    <a href="{% url 'main.views.auth_logout' %}">logout</a>
-    {% else %}
-        <a href = "/login/github">login</a>
-    {% endif %}
   <div class="container" id="wrapper">
     
     <div id="header"></div>
+
 
 
     <div class="row" id="developersContainer"></div> 
@@ -34,7 +29,6 @@
     <h2><%= capitalizeWords(model.name) %></h2>
     <img src= <%= model.src %> />
     <p> Score: <%= model.scoreGivenByCompany %></p>
-    <ul class="comments"></ul>
   </script>
   
   <script type="text/template" id="comment-template">
@@ -69,7 +63,8 @@
     $(function() {
       //console.log({{ user.id }})
       new app.MainView();
-      app.comments = new app.Comments(commentsData);
+      app.comments = new app.Comments();
+
       app.developers = new app.Developers(developersData);
       new app.DevelopersView({collection: app.developers});      
 

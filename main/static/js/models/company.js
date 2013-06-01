@@ -2,7 +2,20 @@
 var app = app || {};
 
 app.Company = Backbone.Model.extend({
+  url: 'http://127.0.0.1:8000/api/v1/contest/2/?format=json',
+  parse: function(response) {
+  var results = {};
 
+    results['task'] = response['task'];
+    results['position'] = response['position']
+    results['developers'] = response['contestant'];
+    //results['companyRepresentatives'] = 
+    results['freelanceFee'] = response['price_money'];
+    results['salary'] = response['hire_salary'];
+    results['title'] = response['title'];
+
+    return results;
+  },
   calculateBill: function(isHired) {
     var billStatement = '', totalBill;
 
