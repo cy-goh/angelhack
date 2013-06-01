@@ -9,7 +9,7 @@ import os
 def create_fn(instance, filename):
     extension = filename.split('.')[-1]
     uuid_str = str(uuid.uuid4())
-    new_filename = os.path.join(uuid_str, extension) 
+    new_filename = '.'.join(uuid_str, extension) 
 
     return new_filename
 
@@ -42,6 +42,7 @@ class Contest(models.Model):
     contestant = models.ManyToManyField(User)
     position = models.CharField(max_length = 50)
     task = models.TextField()
+
     #entry_criteria = models.
     
     def extend_contest(self, days):
@@ -140,7 +141,7 @@ class ProjectUpdateResource(ModelResource):
 class ContestResource(ModelResource):
     company = fields.ForeignKey(CompanyResource, 'company')
     contestant  = fields.ManyToManyField(UserResource, 'contestant', full=True)
-    contest_updates = fields.ToManyField(ProjectUpdateResource, 'contest_updates', null=True)
+    contest_updates = fields.ToManyField(ProjectUpdateResource, 'contest_updates', null=True, full=True)
     class Meta:
         queryset = Contest.objects.all()
         resource = 'contest'
