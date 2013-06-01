@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
   <title>Contest Page</title>
-  <link rel="stylesheet" href="../main/static/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../main/static/css/jquery-ui.min.css">
-  <link rel="stylesheet" href="../main/static/css/utility.css">
-  <script src="../main/static/js/jquery.js"></script>
-  <script src="../main/static/js/jquery-ui.min.js"></script>
-  <script src="../main/static/js/underscore.js"></script>
-  <script src="../main/static/js/backbone.js"></script>  
-  <script src="../main/static/js/helper.js"></script>
-  <script src="../main/static/js/accounting.js"></script>
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/utility.css">
+  <script src="{{ STATIC_URL }}js/jquery.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
+  <script src="{{ STATIC_URL }}js/underscore.js"></script>
+  <script src="{{ STATIC_URL }}js/backbone.js"></script>  
+  <script src="{{ STATIC_URL }}js/helper.js"></script>
+  <script src="{{ STATIC_URL }}js/accounting.js"></script>
 </head>
 <body>
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'main.views.auth_logout' %}">logout</a>
+    {% else %}
+        <a href = "/login/github">login</a>
+    {% endif %}
   <div class="container" id="wrapper">
     
     <div id="header"></div>
-
 
 
     <div class="row" id="developersContainer"></div> 
@@ -47,19 +52,19 @@
     <p><%= model.position %></h2>
   </script>  
 
-  <script src="../main/static/js/data.js"></script>
-  <script src="../main/static/js/initialize.js"></script>
-  <script src="../main/static/js/models/developer.js"></script>
-  <script src="../main/static/js/models/comment.js"></script>
-  <script src="../main/static/js/models/company.js"></script>
+  <script src="{{ STATIC_URL }}js/data.js"></script>
+  <script src="{{ STATIC_URL }}js/initialize.js"></script>
+  <script src="{{ STATIC_URL }}js/models/developer.js"></script>
+  <script src="{{ STATIC_URL }}js/models/comment.js"></script>
+  <script src="{{ STATIC_URL }}js/models/company.js"></script>
 
-  <script src="../main/static/js/collections/developers.js"></script>
-  <script src="../main/static/js/collections/comments.js"></script>
+  <script src="{{ STATIC_URL }}js/collections/developers.js"></script>
+  <script src="{{ STATIC_URL }}js/collections/comments.js"></script>
   
-  <script src="../main/static/js/views/app.js"></script>
-  <script src="../main/static/js/views/company.js"></script>
-  <script src="../main/static/js/views/developers.js"></script>
-  <script src="../main/static/js/views/comments.js"></script>
+  <script src="{{ STATIC_URL }}js/views/app.js"></script>
+  <script src="{{ STATIC_URL }}js/views/company.js"></script>
+  <script src="{{ STATIC_URL }}js/views/developers.js"></script>
+  <script src="{{ STATIC_URL }}js/views/comments.js"></script>
   <script>
     $(function() {
       new app.MainView();
@@ -150,7 +155,7 @@
     </p>
   </div>   
 
-  <script src="../main/static/js/dialog.js"></script>
+  <script src="{{ STATIC_URL }}js/dialog.js"></script>
 
 </body>
 </html>
