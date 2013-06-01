@@ -31,12 +31,12 @@ app.DevelopersView = Backbone.View.extend({
 app.DeveloperView = Backbone.View.extend({
 
   tagName: 'div',
-  className: 'span6',
+  className: 'span6 developer',
   template: _.template( $('#developer-template').html() ),
   
   initialize: function() {
     //use name of candidate as identifying factor, stored in data-id
-    this.$el.attr('data-id', this.model.get('id') );
+    this.$el.attr('data-name-id', this.model.get('name') + "," + this.model.get('id') );
   }, 
 
   render: function() {
