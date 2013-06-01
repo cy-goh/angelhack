@@ -57,7 +57,7 @@ var developersData = [
     scoreGivenByCompany: 4,
     //based on github profile
     level: 6,
-    src: '../main/static/img/super_1.png'
+    src: '{{ STATIC_URL }}img/super_1.png'
   },
   {
     name: 'cloud',
@@ -65,7 +65,7 @@ var developersData = [
     scoreGivenByCompany: -2,
     //based on github profile
     level: 2,
-    src: '../main/static/img/super_2.png'
+    src: '{{ STATIC_URL }}img/super_2.png'
   }
 ];
 

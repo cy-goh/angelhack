@@ -14,7 +14,9 @@ app.CommentsView = Backbone.View.extend({
     //for developers page
     if(typeof this.options.$el !== 'undefined') {
       this.$el = this.options.$el;
-    }
+    };
+
+    this.collection.fetch();
     this.addAll();
   },
 
@@ -30,8 +32,6 @@ app.CommentsView = Backbone.View.extend({
 
   //add comments belonging to the candidate
   addAll: function() {
-    console.log(this.collection)
-    console.log(this.givenTo)
     var tempArray = this.collection.filter( function( comment ) {  
       return comment.get('givenTo') === this.givenTo
     }, this);
