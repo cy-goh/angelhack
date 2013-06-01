@@ -24,16 +24,59 @@
   </script>
 </head>
 <body>
-  <div class="container fixed menu-left">
-      <div id="header"></div>
 
-
-
-      <div class="row" id="developersContainer"></div> 
+    <!-- Main Container Fluid -->
+  <div class="container-fluid fixed menu-left">
+    
+    <!-- Top navbar (note: add class "navbar-hidden" to close the navbar by default) -->
+    <div class="navbar main hidden-print">
+  
+    
+        <!-- Sidebar menu & content wrapper -->
+    <div id="wrapper">
+    
+    <!-- Sidebar Menu -->
+    <div id="menu" class="hidden-phone hidden-print">
+    
+      <!-- Brand -->
+      <a href="/" class="appbrand">Project CKTang <span>Overview</span></a>
+    
+      <!-- Scrollable menu wrapper with Maximum height -->
+      <div class="slim-scroll" data-scroll-height="800px">
+      
+      <!-- Sidebar Profile -->
+      <span class="profile">
+        <p>Welcome <a href="my_account.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light"> {{ user.username }} </a></p>
+        <a class="img" href="my_account.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light"><img src="{{ user.userprofile.profile_image.url }}" alt="Avatar" /></a>
+        <span>
+          <ul>
+            <li><a href="{% url 'main.views.auth_logout' %}" class="glyphicons eject"><i></i>Logout</a></li>
+          </ul>
+        </span>
+      </span>
+      <!-- // Sidebar Profile END -->
+            
+            
+            
+      </div>
+      <!-- // Scrollable Menu wrapper with Maximum Height END -->
+      
+    </div>
+    <!-- // Sidebar Menu END -->
+        
+    <!-- Content -->
+    <div id="content">
+      <h3>Blank page</h3>
+      <p>This is a light-weight blank page, with minimum to none plugins loaded, a simpler menu example and perfect to get you started, as you build up your next cool web app. You can <a href="index.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light" class="glyphicons single link"><i></i>return to the fully featured version</a> anytime.</p>  
+    </div>
+  
+    <div id="header"></div>
+    <div class="row" id="developersContainer"></div> 
       <div class="row center">
         <button class="btn btn-primary" id="award">Award Winner</button>
       </div>
-</div>
+    </div>
+  </div>
 
   <script type="text/template" id="developer-template">
     <h2><%= capitalizeWords(model.name) %></h2>

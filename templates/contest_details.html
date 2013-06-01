@@ -24,5 +24,57 @@
         {% endfor %}
     {% endfor %}
 
+    <script>
+      $(function() {
+        $('#dialog-form').dialog({
+          autoOpen: true,
+          height: 500,
+          width: 500,
+          modal: true,
+          buttons: [{
+            text: "Submit Comment",
+            click: function() {
+              //sending comment 
+              app.comments.create({
+                givenBy: 1,
+                givenTo: 2,
+                points: $(this).find('#points').val(),
+                category: $(this).find('#category').val(),
+                text: $(this).find('#text').val()
+              })
+
+              $(this).dialog('close');
+            }
+          }]
+        });
+      })
+  </script>
+
+ <div id="dialog-form" title="Create New Comment!">
+    <form>
+      <fieldset>
+        <select id="category" class="span2">
+          <option disabled>Category:</option>
+          <option value=1>Communications</option> 
+          <option value=2>Code Quality</option> 
+          <option value=3>Attitude</option> 
+          <option value=4>Others</option> 
+        </select>
+
+        <select id="points" class="span2">
+          <option disabled>Points:</option>
+          <option value=3>3</option> 
+          <option value=2>2</option> 
+          <option value=1>1</option> 
+          <option value=-1>-1</option> 
+          <option value=-2>-2</option> 
+          <option value=-3>-3</option> 
+        </select>
+        <br>
+        <textarea class='span4' rows=5 placeholder='Enter comments here...' id='text'></textarea>        
+      </fieldset>
+    </form>
+  </div>   
+
 </body>
 </html>
