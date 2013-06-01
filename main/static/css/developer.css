@@ -1,0 +1,4 @@
+.commentWrapper {
+  overflow: auto;
+  max-height: 150px;
+}

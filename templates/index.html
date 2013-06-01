@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Contest Page</title>
   <link rel="stylesheet" href="../main/static/css/bootstrap.min.css">
   <link rel="stylesheet" href="../main/static/css/jquery-ui.min.css">
   <link rel="stylesheet" href="../main/static/css/utility.css">
@@ -37,7 +38,6 @@
     <%= Math.abs(model.points) %> 
     <%= model.points > 1 ? "points" : "point" %> 
     for <%= model.category %> </p>
-    <p> <%= model.text %>
   </script>  
 
   <script type="text/template" id="header-template">
@@ -73,6 +73,7 @@
 
       $('#payDialog').dialog({
         autoOpen: false,
+        modal: true,
         buttons: [
         { 
           text: app.developersList[0], 
@@ -96,6 +97,7 @@
 
       $('#hireDialog').dialog({
         autoOpen: false,
+        modal: true,
         dialogClass: 'no-close',
         buttons: [
         { 
@@ -118,12 +120,14 @@
 
       $('#final').dialog({
         autoOpen: false,
+        modal: true,
         dialogClass: 'no-close',
         buttons: [
         { 
-          text: "Shut Up And Take My Money!", 
+          text: "Okay!", 
           click: function() { 
-             $(this).dialog('close');
+            $(this).dialog('close');
+            $('#award').addClass('disabled').unbind('click').text('Winner Awarded');
           }
         }]
       });   

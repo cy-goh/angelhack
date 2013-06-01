@@ -1,7 +1,7 @@
 //initializes app
 var app = app || {};
 
-//main view of the application
+//main view of the application (/index)
 app.MainView = Backbone.View.extend({
   el: '#wrapper',
   initialize: function() {
@@ -13,3 +13,4 @@ app.MainView = Backbone.View.extend({
     app.developersList = app.company.get('developers');
   }
 });
+
