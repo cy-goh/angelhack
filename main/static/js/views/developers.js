@@ -7,7 +7,7 @@ app.DevelopersView = Backbone.View.extend({
 
   initialize: function(options) {
     _.bindAll();
-
+    console.log('starting')
     this.addAll();
   },
 
@@ -40,6 +40,7 @@ app.DeveloperView = Backbone.View.extend({
   }, 
 
   render: function() {
+
     var tempHTML = new app.CommentsView({collection: app.comments, givenTo: this.model.get('id')});
     this.$el.html( this.template( {model: this.model.toJSON() } ) );
 

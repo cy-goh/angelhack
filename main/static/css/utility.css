@@ -1,0 +1,8 @@
+.center {
+  text-align: center;
+}
+
+/* to turn off close button in jquery-ui's dialog */
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
