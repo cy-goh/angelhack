@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="../main/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../main/static/css/jquery-ui.min.css">
+  <link rel="stylesheet" href="../main/static/css/utility.css">
+  <script src="../main/static/js/jquery.js"></script>
+  <script src="../main/static/js/jquery-ui.min.js"></script>
+  <script src="../main/static/js/underscore.js"></script>
+  <script src="../main/static/js/backbone.js"></script>  
+  <script src="../main/static/js/helper.js"></script>
+  <script src="../main/static/js/accounting.js"></script>
+</head>
+<body>
+  <div class="container" id="wrapper">
+    
+    <div id="header"></div>
+
+
+
+    <div class="row" id="developersContainer"></div> 
+    <div class="row center">
+      <button class="btn btn-primary" id="award">Award Winner</button>
+    </div>
+  </div>
+
+  <script type="text/template" id="developer-template">
+    <h2><%= capitalizeWords(model.name) %></h2>
+    <img src= <%= model.src %> />
+    <p> Score: <%= model.scoreGivenByCompany %></p>
+    <ul class="comments"></ul>
+  </script>
+  
+  <script type="text/template" id="comment-template">
+    <p> <%= capitalizeWords(app.companyRepresentativesList[model.givenBy]) %> 
+    <%= model.points > 0 ? "gave" : "took away" %> 
+    <%= Math.abs(model.points) %> 
+    <%= model.points > 1 ? "points" : "point" %> 
+    for <%= model.category %> </p>
+    <p> <%= model.text %>
+  </script>  
+
+  <script type="text/template" id="header-template">
+    <h2>Task Description</h2>
+    <p><%= model.task %> </p>
+    <h2>Position</h2>
+    <p><%= model.position %></h2>
+  </script>  
+
+  <script src="../main/static/js/data.js"></script>
+  <script src="../main/static/js/initialize.js"></script>
+  <script src="../main/static/js/models/developer.js"></script>
+  <script src="../main/static/js/models/comment.js"></script>
+  <script src="../main/static/js/models/company.js"></script>
+
+  <script src="../main/static/js/collections/developers.js"></script>
+  <script src="../main/static/js/collections/comments.js"></script>
+  
+  <script src="../main/static/js/views/app.js"></script>
+  <script src="../main/static/js/views/company.js"></script>
+  <script src="../main/static/js/views/developers.js"></script>
+  <script src="../main/static/js/views/comments.js"></script>
+  <script>
+    $(function() {
+      new app.MainView();
+      app.comments = new app.Comments(commentsData);
+      app.developers = new app.Developers(developersData);
+      new app.DevelopersView({collection: app.developers});      
+
+      $('#award').click( function( event ) {
+        $('#payDialog').dialog("open");
+      });
+
+      $('#payDialog').dialog({
+        autoOpen: false,
+        buttons: [
+        { 
+          text: app.developersList[0], 
+          click: function() { 
+            $(this).dialog('close');
+            $('#hireDialog')
+              .text('Do you would want to hire ' + app.developersList[0] + ' full-time as a ' + app.company.get('position') + '?');
+            $('#hireDialog').dialog('open');
+          }
+        },
+        {
+          text: app.developersList[1],
+          click: function() {
+            $(this).dialog('close');
+            $('#hireDialog')
+              .text('Do you would want to hire ' + app.developersList[1] + ' full-time as a ' + app.company.get('position') + '?');        
+            $('#hireDialog').dialog('open');
+          }
+        }]
+      });
+
+      $('#hireDialog').dialog({
+        autoOpen: false,
+        dialogClass: 'no-close',
+        buttons: [
+        { 
+          text: "Yes", 
+          click: function() { 
+            app.company.calculateBill(true);
+            $(this).dialog('close');
+            $('#final').html(app.company.get('totalBillStatement')).dialog('open');
+          }
+        },
+        {
+          text: "No",
+          click: function() {
+            app.company.calculateBill(false);
+            $(this).dialog('close');
+            $('#final').html(app.company.get('totalBillStatement')).dialog('open');
+          }
+        }]
+      });    
+
+      $('#final').dialog({
+        autoOpen: false,
+        dialogClass: 'no-close',
+        buttons: [
+        { 
+          text: "Shut Up And Take My Money!", 
+          click: function() { 
+             $(this).dialog('close');
+          }
+        }]
+      });   
+
+    })
+  </script>
+
+  <div id="payDialog" title="Select the winner!">
+    <p> 80% of the prize will be awarded to the winner, with the rest split evenly.
+    </p>
+  </div>   
+
+  <div id="hireDialog" title="Full-time employment">
+    <p> Do you would want to hire Barret full-time as a Front-End Engineer?
+    </p>
+  </div>   
+
+  <div id="final" title="Final Bill">
+    <p> Total: $1,000.
+    </p>
+  </div>   
+
+  <script src="../main/static/js/dialog.js"></script>
+
+</body>
+</html>
