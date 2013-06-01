@@ -121,9 +121,10 @@
         dialogClass: 'no-close',
         buttons: [
         { 
-          text: "Shut Up And Take My Money!", 
+          text: "Okay!", 
           click: function() { 
-             $(this).dialog('close');
+            $(this).dialog('close');
+            $('#award').addClass('disabled').unbind('click').text('Winner Awarded');
           }
         }]
       });   
