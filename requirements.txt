@@ -1,2 +1,6 @@
 django==1.5.1
 django-social-auth
+PyGithub
+pil
+django-social-auth
+django-tastypie
