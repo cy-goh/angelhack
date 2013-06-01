@@ -81,6 +81,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     profile_image = models.ImageField(upload_to = create_fn, null = True, blank = True)
     join_date = models.DateField(auto_now_add = True)
+    about_me = models.TextField()
 
 
 def reputation_pipeline( **kwargs):

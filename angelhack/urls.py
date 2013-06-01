@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'', include('social_auth.urls')),
     url(r'logout/', 'main.views.auth_logout'),
     url(r'^$', 'main.views.homepage', name='home'),
+    url(r'^signup_complete', 'main.views.signup_complete'),
     (r'^api/', include(v1_api.urls)),
     # url(r'^angelhack/', include('angelhack.foo.urls')),
 
