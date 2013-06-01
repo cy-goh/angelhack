@@ -10,6 +10,11 @@ app.CommentsView = Backbone.View.extend({
 
     //el is set based on id passed when view is created
     this.givenTo = this.options.givenTo;
+
+    //for developers page
+    if(typeof this.options.$el !== 'undefined') {
+      this.$el = this.options.$el;
+    }
     this.addAll();
   },
 
@@ -19,12 +24,14 @@ app.CommentsView = Backbone.View.extend({
 
   addOne: function( comment ) {
     var tempHTML = new app.CommentView( {model: comment} );
+    console.log(tempHTML)
     this.$el.append(tempHTML.render().el);
   },
 
   //add comments belonging to the candidate
   addAll: function() {
-
+    console.log(this.collection)
+    console.log(this.givenTo)
     var tempArray = this.collection.filter( function( comment ) {  
       return comment.get('givenTo') === this.givenTo
     }, this);
