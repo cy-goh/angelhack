@@ -42,7 +42,9 @@ class Contest(models.Model):
     contestant = models.ManyToManyField(User)
     position = models.CharField(max_length = 50)
     task = models.TextField()
-
+    
+    price_money = models.DecimalField(max_digits=6, decimal_places = 2)
+    hire_salary = models.DecimalField(max_digits=6, decimal_places = 2)
     #entry_criteria = models.
     
     def extend_contest(self, days):
@@ -132,8 +134,8 @@ class UserResource(ModelResource):
 
 
 class ProjectUpdateResource(ModelResource):
-    from_user = fields.ForeignKey(UserResource, 'tester')
-    to_user = fields.ForeignKey(UserResource, 'contestant')
+    tester = fields.ForeignKey(UserResource, 'from_user', full=True)
+    contestant = fields.ForeignKey(UserResource, 'to_user', full=True)
     class Meta:
         queryset = ContestUpdate.objects.all()
         resource = 'contest_update'
