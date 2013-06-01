@@ -9,7 +9,7 @@ import os
 def create_fn(instance, filename):
     extension = filename.split('.')[-1]
     uuid_str = str(uuid.uuid4())
-    new_filename = '.'.join(uuid_str, extension) 
+    new_filename = '.'.join([uuid_str, extension]) 
 
     return new_filename
 
@@ -82,6 +82,9 @@ class UserProfile(models.Model):
     profile_image = models.ImageField(upload_to = create_fn, null = True, blank = True)
     join_date = models.DateField(auto_now_add = True)
     about_me = models.TextField()
+
+    def __unicode__(self):
+        return self.user.username
 
 
 def reputation_pipeline( **kwargs):

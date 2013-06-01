@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
 from main.models import CompanyResource, ContestResource, UserResource, ProjectUpdateResource
-# Uncomment the next two lines to enable the admin:
+from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
@@ -19,6 +20,7 @@ urlpatterns = patterns('',
     url(r'logout/', 'main.views.auth_logout'),
     url(r'^$', 'main.views.homepage', name='home'),
     url(r'^signup_complete', 'main.views.signup_complete'),
+    url(r'^contest/(\d+)/', 'main.views.project_page'),
     (r'^api/', include(v1_api.urls)),
     # url(r'^angelhack/', include('angelhack.foo.urls')),
 
@@ -27,4 +29,4 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
      url(r'^admin/', include(admin.site.urls)),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

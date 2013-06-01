@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 
 from social_auth.db.django_models import UserSocialAuth
@@ -10,6 +10,11 @@ def homepage(request):
     return render_to_response('index.html', {}, context_instance= RequestContext(request))
 
 from django.contrib.auth import logout
+
+def project_page(request, pid):
+    get_object_or_404(Contest, pk = pid)
+    json_url = '/api/v1/contest/%s/' %pid
+    return render_to_response('contest.html', {"resource_url": json_url}, context_instance = RequestContext(request))
 
 def auth_logout(request):
     logout(request)
