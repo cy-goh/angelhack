@@ -67,10 +67,10 @@
       app.developers = new app.Developers(developersData);
       new app.DevelopersView({collection: app.developers});    
 
-      var candidatesNames = [$('.developer').eq(0).attr('data-name-id').split(',')[0], 
+      candidatesNames = [$('.developer').eq(0).attr('data-name-id').split(',')[0], 
         $('.developer').eq(1).attr('data-name-id').split(',')[0]];
     
-      var candidatesIds = [$('.developer').eq(0).attr('data-name-id').split(',')[1], 
+      candidatesIds = [$('.developer').eq(0).attr('data-name-id').split(',')[1], 
         $('.developer').eq(1).attr('data-name-id').split(',')[1]];      
 
       $('#award').click( function( event ) {

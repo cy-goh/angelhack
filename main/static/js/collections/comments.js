@@ -18,7 +18,7 @@ app.Comments = Backbone.Collection.extend({
 
       results.push(attr);
     }
-    
+    //console.log(results)
     return results;
   }
 });

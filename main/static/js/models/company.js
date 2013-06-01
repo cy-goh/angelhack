@@ -14,6 +14,7 @@ app.Company = Backbone.Model.extend({
 
     return results;
   },
+
   calculateBill: function(isHired) {
     var billStatement = '', totalBill;
 
