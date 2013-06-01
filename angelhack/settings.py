@@ -1,4 +1,6 @@
 # Django settings for angelhack project.
+import os
+PROJECT_URL = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,8 +13,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.path.join(PROJECT_URL, 'database.sqlite3'),                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -107,9 +109,6 @@ ROOT_URLCONF = 'angelhack.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'angelhack.wsgi.application'
 
-import os
-PROJECT_URL = os.path.abspath(os.path.dirname(__file__))
-print PROJECT_URL
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_URL, '..', 'templates'), 
@@ -125,6 +124,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
+    'reputation',
+    'social_auth',
+
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -159,3 +162,42 @@ LOGGING = {
         },
     }
 }
+
+GITHUB_APP_ID = 'a1ddcf918e28d700a922'
+GITHUB_API_SECRET = '273d39cbd93da1b27b80397c1912f3c7026bf23e'
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+    'social_auth.context_processors.social_auth_by_type_backends',
+)
+
+LOGIN_REDIRECT_URL = '/'
+REPUTATION_MAX_GAIN_PER_DAY = 10000
+REPUTATION_MAX_LOSS_PER_DAY = 10000
+
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    #'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details',
+    'main.models.reputation_pipeline',
+)
+
+LOGIN_ERROR_URL = "federer"
+SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+
+REPUTATION_PERMISSONS = {'voting.can_vote_up': 50,
+                         'voting.can_vote_down': 150}
