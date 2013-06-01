@@ -4,7 +4,7 @@ var app = app || {};
 app.CommentsView = Backbone.View.extend({
 
   tagName: 'ul',
-  className: 'comments',
+  className: 'comments list',
 
   initialize: function(options) {
     _.bindAll();
@@ -55,14 +55,23 @@ app.CommentsView = Backbone.View.extend({
 app.CommentView = Backbone.View.extend({
 
   tagName: 'li',
+  className: 'double',
   template: _.template( $('#comment-template').html() ),
   
   initialize: function() {
   }, 
 
+  events: {
+    'click': 'redirect'
+  },
+
   render: function() {
     this.$el.html( this.template( {model: this.model.toJSON() } ) );
     return this;
+  },
+
+  redirect: function() {
+    window.location.href = '/KIV';
   }
 });
 

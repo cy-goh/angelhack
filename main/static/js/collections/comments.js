@@ -15,7 +15,7 @@ app.Comments = Backbone.Collection.extend({
       attr['points'] = target[i]['points_awarded'];
       attr['category'] = target[i]['category'];
       attr['text'] = target[i]['comment'];
-
+      attr['dateAdded'] = target[i]['date_added'];
       results.push(attr);
     }
     //console.log(results)

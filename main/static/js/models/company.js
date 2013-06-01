@@ -24,7 +24,8 @@ app.Company = Backbone.Model.extend({
 
     this.set('totalBill', totalBill);
 
-    billStatement = "Total Bill: " + this.get('totalBill') + "</br>";
+    billStatement = 'Your receipt has been sent to your email. </br>';
+    billStatement += "Total Bill: " + this.get('totalBill') + "</br>";
     
     if(isHired) {
       billStatement += "One month salary: " + accounting.formatMoney(this.get('salary') + "</br>");

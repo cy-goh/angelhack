@@ -31,7 +31,7 @@ app.DevelopersView = Backbone.View.extend({
 app.DeveloperView = Backbone.View.extend({
 
   tagName: 'div',
-  className: 'span6 developer',
+  className: 'span6 developer widget-activity',
   template: _.template( $('#developer-template').html() ),
   
   initialize: function() {

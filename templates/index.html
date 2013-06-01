@@ -5,6 +5,9 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/utility.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/style-light.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/glyphicons.css">
+  
   <script src="{{ STATIC_URL }}js/jquery.js"></script>
   <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
   <script src="{{ STATIC_URL }}js/underscore.js"></script>
@@ -32,11 +35,17 @@
   </script>
   
   <script type="text/template" id="comment-template">
-    <p> <%= capitalizeWords(model.givenByName) %> 
-    <%= model.points > 0 ? "gave" : "took away" %> 
-    <%= Math.abs(model.points) %> 
-    <%= model.points > 1 ? "points" : "point" %> 
-    for <%= model.category %> </p>
+    <span class="glyphicons activity-icon envelope"><i></i></span>
+    <span class="ellipsis">
+      <%= capitalizeWords(model.givenByName) %>
+      <%= model.points > 0 ? "gave" : "took away" %> 
+      <%= Math.abs(model.points) %> 
+      <%= model.points > 1 ? "points" : "point" %> 
+      for <%= model.category %> </p>
+      <span class="meta glyphicons calendar single"><i></i> on <%= model.dateAdded %> </span>
+    </span>
+    <div class="clearfix"></div>      
+
   </script>  
 
   <script type="text/template" id="header-template">
@@ -61,6 +70,8 @@
   <script>
     $(function() {
       //console.log({{ user.id }})
+      //console.log( {{ resource_url }} )
+
       new app.MainView();
       app.comments = new app.Comments();
 
@@ -80,22 +91,23 @@
       $('#payDialog').dialog({
         autoOpen: false,
         modal: true,
+        width: 400,
         buttons: [
         { 
-          text: candidatesNames[0], 
+          text: capitalizeWords(candidatesNames[0]), 
           click: function() { 
             $(this).dialog('close');
             $('#hireDialog')
-              .text('Do you would want to hire ' + candidatesNames[0] + ' full-time as a ' + app.company.get('position') + '?');
+              .text('Do you would want to hire ' + capitalizeWords(candidatesNames[0]) + ' full-time as a ' + app.company.get('position') + '?');
             $('#hireDialog').dialog('open');
           }
         },
         {
-          text: candidatesNames[1],
+          text: capitalizeWords(candidatesNames[1]),
           click: function() {
             $(this).dialog('close');
             $('#hireDialog')
-              .text('Do you would want to hire ' + candidatesNames[1] + ' full-time as a ' + app.company.get('position') + '?');        
+              .text('Do you would want to hire ' + capitalizeWords(candidatesNames[1]) + ' full-time as a ' + app.company.get('position') + '?');        
             $('#hireDialog').dialog('open');
           }
         }]
@@ -104,6 +116,7 @@
       $('#hireDialog').dialog({
         autoOpen: false,
         modal: true,
+        width: 400,
         dialogClass: 'no-close',
         buttons: [
         { 
@@ -127,6 +140,7 @@
       $('#final').dialog({
         autoOpen: false,
         modal: true,
+        width: 400,
         dialogClass: 'no-close',
         buttons: [
         { 
@@ -146,7 +160,7 @@
     </p>
   </div>   
 
-  <div id="hireDialog" title="Full-time employment">
+  <div id="hireDialog" title="Full-time Employment">
     <p> Do you would want to hire Barret full-time as a Front-End Engineer?
     </p>
   </div>   
