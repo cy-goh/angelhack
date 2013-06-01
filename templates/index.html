@@ -14,6 +14,14 @@
   <script src="{{ STATIC_URL }}js/backbone.js"></script>  
   <script src="{{ STATIC_URL }}js/helper.js"></script>
   <script src="{{ STATIC_URL }}js/accounting.js"></script>
+  <script type="text/javascript">
+    categories = {
+      1: "Communications",
+      2: "Coding Quality",
+      3: "Attitude",
+      4: "Others"
+}
+  </script>
 </head>
 <body>
   <div class="container" id="wrapper">
@@ -41,7 +49,7 @@
       <%= model.points > 0 ? "gave" : "took away" %> 
       <%= Math.abs(model.points) %> 
       <%= model.points > 1 ? "points" : "point" %> 
-      for <%= model.category %> </p>
+      for <%= categories[model.category] %>. </p>
       <span class="meta glyphicons calendar single"><i></i> on <%= model.dateAdded %> </span>
     </span>
     <div class="clearfix"></div>      
@@ -55,7 +63,7 @@
     <p><%= model.position %></h2>
   </script>  
 
-  <script src="{{ STATIC_URL }}js/data.js"></script>
+ 
   <script src="{{ STATIC_URL }}js/models/developer.js"></script>
   <script src="{{ STATIC_URL }}js/models/comment.js"></script>
   <script src="{{ STATIC_URL }}js/models/company.js"></script>
@@ -75,97 +83,97 @@
       new app.MainView();
       app.comments = new app.Comments();
 
-      app.developers = new app.Developers(developersData);
+      app.developers = new app.Developers();
       new app.DevelopersView({collection: app.developers});    
 
-      candidatesNames = [$('.developer').eq(0).attr('data-name-id').split(',')[0], 
-        $('.developer').eq(1).attr('data-name-id').split(',')[0]];
-    
-      candidatesIds = [$('.developer').eq(0).attr('data-name-id').split(',')[1], 
-        $('.developer').eq(1).attr('data-name-id').split(',')[1]];      
-
       $('#award').click( function( event ) {
+        console.log($('.developer').length)
+        candidatesNames = [$('.developer').eq(0).attr('data-name-id').split(',')[0], 
+        $('.developer').eq(1).attr('data-name-id').split(',')[0]];
+      
+        candidatesIds = [$('.developer').eq(0).attr('data-name-id').split(',')[1], 
+        $('.developer').eq(1).attr('data-name-id').split(',')[1]];  
+        $('#payDialog, #hireDialog, #final').removeClass('hidden');
+
+        $('#payDialog').dialog({
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          buttons: [
+          { 
+            text: capitalizeWords(candidatesNames[0]), 
+            click: function() { 
+              $(this).dialog('close');
+              $('#hireDialog')
+                .text('Do you would want to hire ' + capitalizeWords(candidatesNames[0]) + ' full-time as a ' + app.company.get('position') + '?');
+              $('#hireDialog').dialog('open');
+            }
+          },
+          {
+            text: capitalizeWords(candidatesNames[1]),
+            click: function() {
+              $(this).dialog('close');
+              $('#hireDialog')
+                .text('Do you would want to hire ' + capitalizeWords(candidatesNames[1]) + ' full-time as a ' + app.company.get('position') + '?');        
+              $('#hireDialog').dialog('open');
+            }
+          }]
+        });
+
+        $('#hireDialog').dialog({
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          dialogClass: 'no-close',
+          buttons: [
+          { 
+            text: "Yes", 
+            click: function() { 
+              app.company.calculateBill(true);
+              $(this).dialog('close');
+              $('#final').html(app.company.get('totalBillStatement')).dialog('open');
+            }
+          },
+          {
+            text: "No",
+            click: function() {
+              app.company.calculateBill(false);
+              $(this).dialog('close');
+              $('#final').html(app.company.get('totalBillStatement')).dialog('open');
+            }
+          }]
+        });    
+
+        $('#final').dialog({
+          autoOpen: false,
+          modal: true,
+          width: 400,
+          dialogClass: 'no-close',
+          buttons: [
+          { 
+            text: "Okay!", 
+            click: function() { 
+              $(this).dialog('close');
+              $('#award').addClass('disabled').unbind('click').text('Winner Awarded');
+            }
+          }]
+        });   
         $('#payDialog').dialog("open");
       });
-
-      $('#payDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 400,
-        buttons: [
-        { 
-          text: capitalizeWords(candidatesNames[0]), 
-          click: function() { 
-            $(this).dialog('close');
-            $('#hireDialog')
-              .text('Do you would want to hire ' + capitalizeWords(candidatesNames[0]) + ' full-time as a ' + app.company.get('position') + '?');
-            $('#hireDialog').dialog('open');
-          }
-        },
-        {
-          text: capitalizeWords(candidatesNames[1]),
-          click: function() {
-            $(this).dialog('close');
-            $('#hireDialog')
-              .text('Do you would want to hire ' + capitalizeWords(candidatesNames[1]) + ' full-time as a ' + app.company.get('position') + '?');        
-            $('#hireDialog').dialog('open');
-          }
-        }]
-      });
-
-      $('#hireDialog').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 400,
-        dialogClass: 'no-close',
-        buttons: [
-        { 
-          text: "Yes", 
-          click: function() { 
-            app.company.calculateBill(true);
-            $(this).dialog('close');
-            $('#final').html(app.company.get('totalBillStatement')).dialog('open');
-          }
-        },
-        {
-          text: "No",
-          click: function() {
-            app.company.calculateBill(false);
-            $(this).dialog('close');
-            $('#final').html(app.company.get('totalBillStatement')).dialog('open');
-          }
-        }]
-      });    
-
-      $('#final').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 400,
-        dialogClass: 'no-close',
-        buttons: [
-        { 
-          text: "Okay!", 
-          click: function() { 
-            $(this).dialog('close');
-            $('#award').addClass('disabled').unbind('click').text('Winner Awarded');
-          }
-        }]
-      });   
-
     })
   </script>
 
-  <div id="payDialog" title="Select the winner!">
+  <div id="payDialog" title="Select the winner!" class='hidden'>
     <p> 80% of the prize will be awarded to the winner, with the rest split evenly.
     </p>
   </div>   
 
-  <div id="hireDialog" title="Full-time Employment">
+  <div id="hireDialog" title="Full-time Employment" class='hidden'>
     <p> Do you would want to hire Barret full-time as a Front-End Engineer?
     </p>
   </div>   
 
-  <div id="final" title="Final Bill">
+  <div id="final" title="Final Bill" class='hidden'>
     <p> Total: $1,000.
     </p>
   </div>   

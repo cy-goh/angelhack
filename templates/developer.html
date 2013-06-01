@@ -41,7 +41,7 @@
     <%= model.points > 0 ? "gave" : "took away" %> 
     <%= Math.abs(model.points) %> 
     <%= model.points > 1 ? "points" : "point" %> 
-    for <%= model.category %> </p>
+    for <%= categories[model.category] %> </p>
     <div class="commentWrapper">  
       <p> <%= model.text %>
     </div>
@@ -119,10 +119,10 @@
       <fieldset>
         <select id="category" class="span2">
           <option disabled>Category:</option>
-          <option value="attitude">Attitude</option> 
-          <option value="codequality">Code Quality</option> 
-          <option value="communication">Communications</option> 
-          <option value="others">Others</option> 
+          <option value=1>Communications</option> 
+          <option value=2>Code Quality</option> 
+          <option value=3>Attitude</option> 
+          <option value=4>Others</option> 
         </select>
 
         <select id="points" class="span2">

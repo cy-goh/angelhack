@@ -1,3 +1,11 @@
+categories = {
+  1: "Communications",
+  2: "Coding Quality"
+  3: "Attitude",
+  4: "Others"
+}
+
+/*
 var commentsData = [
   {
     //id for givenBy is based off company representative id
@@ -68,3 +76,4 @@ var developersData = [
     src: '../main/static/img/super_2.png'
   }
 ];
+*/

@@ -7,12 +7,13 @@ app.DevelopersView = Backbone.View.extend({
 
   initialize: function(options) {
     _.bindAll();
-    this.$el.empty();
-    this.addAll();
-  },
+    var that = this;
 
- render: function() {
-
+    this.collection.fetch({
+      success: function() {
+        that.addAll();
+      }
+    })
   },
 
   addOne: function( developer ) {

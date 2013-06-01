@@ -24,23 +24,21 @@ app.CommentsView = Backbone.View.extend({
     };
 
     this.collection.fetch({success: function() {
-      that.addAll();  
+      that.addAll(); 
+      //console.log(that.el) 
     }});
     
   },
 
-  render: function() {
-
-  },
-
   addOne: function( comment ) {
+    console.log('calling')
     var tempHTML = new app.CommentView( {model: comment} );
     this.$el.append(tempHTML.render().el);
+    console.log(tempHTML)
   },
 
   //add comments belonging to the candidate
   addAll: function() {
-    //console.log(this.collection)
     var tempArray = this.collection.filter( function( comment ) {  
       return comment.get('givenTo') === this.givenTo
     }, this);
