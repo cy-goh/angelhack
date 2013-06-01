@@ -2,5 +2,5 @@
 *.pot
 *.pyc
 *.swp
-
+*.orig
 local_settings.py
