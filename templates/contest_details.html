@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contest Details Page</title>
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/utility.css">
+  <script src="{{ STATIC_URL }}js/jquery.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
+  <script src="{{ STATIC_URL }}js/underscore.js"></script>
+  <script src="{{ STATIC_URL }}js/backbone.js"></script>  
+  <script src="{{ STATIC_URL }}js/helper.js"></script>
+  <script src="{{ STATIC_URL }}js/accounting.js"></script>
+</head>
+<body>
+
+    Contest title is {{ contest.title }}
+    
+    {% for c in contestants %}
+    {{ c.contestant.first_name }} {{ c.contestant.last_name }}
+        {% for comment in c.comments %}
+            {{ comment.comment }}
+            points awarded: {{ comment.points_awarded }}
+        {% endfor %}
+    {% endfor %}
+
+</body>
+</html>
