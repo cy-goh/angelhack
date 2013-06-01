@@ -3,13 +3,24 @@ from django.template import RequestContext
 
 from social_auth.db.django_models import UserSocialAuth
 from reputation.models import Reputation
-from main.models import Contest
+from main.models import Contest, ContestUpdate
 from github import Github
 
 def homepage(request):
     return render_to_response('index.html', {}, context_instance= RequestContext(request))
 
 from django.contrib.auth import logout
+
+def create_comment(request):
+    pass
+
+def project_details(request, pid):
+    instance = get_object_or_404(Contest, pk = pid)
+    contestants = []
+    for c in instance.contestant.all():
+        comments = ContestUpdate.objects.filter(contest = instance, to_user = c) 
+        contestants.append({"contestant": c, "comments": comments})
+    return render_to_response('contest_details.html', {'contest': instance, "contestants": contestants}, context_instance = RequestContext(request)) 
 
 def project_page(request, pid):
     get_object_or_404(Contest, pk = pid)
