@@ -8,7 +8,11 @@ app.CompanyView = Backbone.View.extend({
   template: _.template( $('#header-template').html() ),
   
   initialize: function() {
-    this.render();
+    var that = this;
+    this.model.fetch({success: function() {
+      that.render();
+      app.companyRepresentativesList = that.model.get('companyRepresentatives');
+    }})
   }, 
 
   render: function() {

@@ -13,15 +13,10 @@
   <script src="{{ STATIC_URL }}js/accounting.js"></script>
 </head>
 <body>
-
-    {% if user.is_authenticated %}
-    <a href="{% url 'main.views.auth_logout' %}">logout</a>
-    {% else %}
-        <a href = "/login/github">login</a>
-    {% endif %}
   <div class="container" id="wrapper">
     
     <div id="header"></div>
+
 
 
     <div class="row" id="developersContainer"></div> 
@@ -34,11 +29,10 @@
     <h2><%= capitalizeWords(model.name) %></h2>
     <img src= <%= model.src %> />
     <p> Score: <%= model.scoreGivenByCompany %></p>
-    <ul class="comments"></ul>
   </script>
   
   <script type="text/template" id="comment-template">
-    <p> <%= capitalizeWords(app.companyRepresentativesList[model.givenBy]) %> 
+    <p> <%= capitalizeWords(model.givenByName) %> 
     <%= model.points > 0 ? "gave" : "took away" %> 
     <%= Math.abs(model.points) %> 
     <%= model.points > 1 ? "points" : "point" %> 
@@ -53,7 +47,6 @@
   </script>  
 
   <script src="{{ STATIC_URL }}js/data.js"></script>
-  <script src="{{ STATIC_URL }}js/initialize.js"></script>
   <script src="{{ STATIC_URL }}js/models/developer.js"></script>
   <script src="{{ STATIC_URL }}js/models/comment.js"></script>
   <script src="{{ STATIC_URL }}js/models/company.js"></script>
@@ -67,10 +60,18 @@
   <script src="{{ STATIC_URL }}js/views/comments.js"></script>
   <script>
     $(function() {
+      //console.log({{ user.id }})
       new app.MainView();
-      app.comments = new app.Comments(commentsData);
+      app.comments = new app.Comments();
+
       app.developers = new app.Developers(developersData);
-      new app.DevelopersView({collection: app.developers});      
+      new app.DevelopersView({collection: app.developers});    
+
+      var candidatesNames = [$('.developer').eq(0).attr('data-name-id').split(',')[0], 
+        $('.developer').eq(1).attr('data-name-id').split(',')[0]];
+    
+      var candidatesIds = [$('.developer').eq(0).attr('data-name-id').split(',')[1], 
+        $('.developer').eq(1).attr('data-name-id').split(',')[1]];      
 
       $('#award').click( function( event ) {
         $('#payDialog').dialog("open");
@@ -81,20 +82,20 @@
         modal: true,
         buttons: [
         { 
-          text: app.developersList[0], 
+          text: candidatesNames[0], 
           click: function() { 
             $(this).dialog('close');
             $('#hireDialog')
-              .text('Do you would want to hire ' + app.developersList[0] + ' full-time as a ' + app.company.get('position') + '?');
+              .text('Do you would want to hire ' + candidatesNames[0] + ' full-time as a ' + app.company.get('position') + '?');
             $('#hireDialog').dialog('open');
           }
         },
         {
-          text: app.developersList[1],
+          text: candidatesNames[1],
           click: function() {
             $(this).dialog('close');
             $('#hireDialog')
-              .text('Do you would want to hire ' + app.developersList[1] + ' full-time as a ' + app.company.get('position') + '?');        
+              .text('Do you would want to hire ' + candidatesNames[1] + ' full-time as a ' + app.company.get('position') + '?');        
             $('#hireDialog').dialog('open');
           }
         }]

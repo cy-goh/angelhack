@@ -6,11 +6,8 @@ app.MainView = Backbone.View.extend({
   el: '#wrapper',
   initialize: function() {
     console.log('initializing main view');
-    app.company = new app.Company(companyData);
+    app.company = new app.Company();
     new app.CompanyView({model: app.company});
-
-    app.companyRepresentativesList = app.company.get('companyRepresentatives');
-    app.developersList = app.company.get('developers');
   }
 });
 
