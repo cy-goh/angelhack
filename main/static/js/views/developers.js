@@ -7,7 +7,6 @@ app.DevelopersView = Backbone.View.extend({
 
   initialize: function(options) {
     _.bindAll();
-    console.log('starting')
     this.addAll();
   },
 

@@ -68,3 +68,16 @@ var developersData = [
     src: '../main/static/img/super_2.png'
   }
 ];
+
+var companyData = {
+  task: "create gamification module",
+  position: "front-end engineer",
+  developers: ['cloud', 'barret'],
+  companyRepresentatives: {
+    1: 'elmo',
+    2: 'cookie monster',
+    3: 'big bird'
+  },
+  freelanceFee: 1000,
+  salary: 5000
+}
