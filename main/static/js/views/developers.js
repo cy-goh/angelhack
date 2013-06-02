@@ -32,7 +32,7 @@ app.DevelopersView = Backbone.View.extend({
 app.DeveloperView = Backbone.View.extend({
 
   tagName: 'div',
-  className: 'span6 developer widget-activity',
+  className: 'span6 developer',
   template: _.template( $('#developer-template').html() ),
   
   initialize: function() {
@@ -45,8 +45,8 @@ app.DeveloperView = Backbone.View.extend({
     var tempHTML = new app.CommentsView({collection: app.comments, givenTo: this.model.get('id')});
     this.$el.html( this.template( {model: this.model.toJSON() } ) );
 
-    //appends the comment list
-    this.$el.append(tempHTML.el);
+    //replaces the comment list
+    this.$('#filterMessagesTab').append(tempHTML.el);
     return this;
   }
 });

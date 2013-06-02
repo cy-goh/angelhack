@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/utility.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/style-light.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/glyphicons.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/index.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/developer.css">
   
   <script src="{{ STATIC_URL }}js/jquery.js"></script>
   <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
@@ -14,13 +16,30 @@
   <script src="{{ STATIC_URL }}js/backbone.js"></script>  
   <script src="{{ STATIC_URL }}js/helper.js"></script>
   <script src="{{ STATIC_URL }}js/accounting.js"></script>
+  <script src="{{ STATIC_URL }}js/jtruncate.js"></script>
   <script type="text/javascript">
     categories = {
       1: "Communications",
       2: "Coding Quality",
       3: "Attitude",
       4: "Others"
-}
+    };
+
+    //setting values for accounting.formatMoney
+    accounting.settings = {
+      currency: {
+        symbol : "$",   // default currency symbol is '$'
+        format: "%s%v", // controls output: %s = symbol, %v = value/number (can be object: see below)
+        decimal : ".",  // decimal point separator
+        thousand: ",",  // thousands separator
+        precision : 0   // decimal places
+      },
+      number: {
+        precision : 0,  // default precision on numbers is 0
+        thousand: ",",
+        decimal : "."
+      }
+    }
   </script>
 </head>
 <body>
@@ -66,28 +85,53 @@
         
     <!-- Content -->
     <div id="content">
-      <h3>Blank page</h3>
-      <p>This is a light-weight blank page, with minimum to none plugins loaded, a simpler menu example and perfect to get you started, as you build up your next cool web app. You can <a href="index.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light" class="glyphicons single link"><i></i>return to the fully featured version</a> anytime.</p>  
+      <h2>Project CKTang <span><b>The way</b> to hire startup engineers</span></h2>
+      
+      <div class="row-fluid" id="header"></div>
+      
+    <div class='separator-line'></div>
+
+
+    <div class="row-fluid" id='developersContainer'></div>
+    <br>
+    <div class="row-fluid center">
+      <button class="btn btn-primary" id="award">Award Winner</button>
     </div>
-  
-    <div id="header"></div>
-    <div class="row" id="developersContainer"></div> 
-      <div class="row center">
-        <button class="btn btn-primary" id="award">Award Winner</button>
-      </div>
-    </div>
+  <br>
   </div>
 
+    <div id="footer" class="hidden-print">      
+      <!--  Copyright Line -->
+      <div class="copy">&copy; 2013 - <a href="/">Project CKTang</a> - All Rights Reserved. </div>
+      <!--  End Copyright Line -->
+  
+    </div>
+    <!-- // Footer END -->
+  </div>
+
+
   <script type="text/template" id="developer-template">
-    <h2><%= capitalizeWords(model.name) %></h2>
-    <img src= <%= model.src %> />
-    <p> Score: <%= model.scoreGivenByCompany %></p>
+    <div class="widget widget-activity margin-none" data-toggle="collapse-widget">
+      <div class="widget-head">
+        <h4 class="heading"><%= capitalizeWords(model.name) %> Score</h4>
+      </div>
+      <div class="widget-body">
+        <div class="innerB">
+          insert photo here
+          <div class="clearfix"></div>
+          <div class="tab-content">
+            <div class="tab-pane active" id="filterMessagesTab">
+            </div>
+          </div>          
+        </div>      
+      </div>
+    </div>
   </script>
   
   <script type="text/template" id="comment-template">
     <span class="glyphicons activity-icon envelope"><i></i></span>
     <span class="ellipsis">
-      <%= capitalizeWords(model.givenByName) %>
+      <%= model.givenByName %>
       <%= model.points > 0 ? "gave" : "took away" %> 
       <%= Math.abs(model.points) %> 
       <%= model.points > 1 ? "points" : "point" %> 
@@ -99,10 +143,28 @@
   </script>  
 
   <script type="text/template" id="header-template">
-    <h2>Task Description</h2>
-    <p><%= model.task %> </p>
-    <h2>Position</h2>
-    <p><%= model.position %></h2>
+    <div class="span6">
+      <div class="innerAll">
+        <div class="separator bottom"></div>
+        <div class="glyphicons glyphicon-large shield">
+          <i></i>
+          <h4>Task Description</h4>
+          <p id='task'><%= model.task %><br/></p>
+        </div>
+      </div>
+    </div>
+    <div class="span6">
+      <div class="innerAll">
+        <div class="separator bottom"></div>
+        <div class="glyphicons glyphicon-large group group-column">
+          <i></i>
+          <h4>Position and Renumeration</h4>
+          <p><b>Position: </b><%= model.position %></p>
+          <p><b>Renumeration</b>: <%= accounting.formatMoney(model.freelanceFee) %> (project fee), 
+          <%= accounting.formatMoney(model.salary) %> (monthly salary)</p>
+        </div>
+      </div>
+    </div>
   </script>  
 
  

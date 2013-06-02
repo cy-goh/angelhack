@@ -4,7 +4,7 @@ var app = app || {};
 app.CommentsView = Backbone.View.extend({
 
   tagName: 'ul',
-  className: 'comments list',
+  className: 'list',
 
   initialize: function(options) {
     _.bindAll();
@@ -34,7 +34,7 @@ app.CommentsView = Backbone.View.extend({
     console.log('calling')
     var tempHTML = new app.CommentView( {model: comment} );
     this.$el.append(tempHTML.render().el);
-    console.log(tempHTML)
+    //console.log(tempHTML)
   },
 
   //add comments belonging to the candidate
@@ -72,4 +72,7 @@ app.CommentView = Backbone.View.extend({
     window.location.href = '/KIV';
   }
 });
+
+
+
 

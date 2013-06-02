@@ -5,7 +5,7 @@ app.Comments = Backbone.Collection.extend({
   model: app.Comment,
   url: 'http://127.0.0.1:8000/api/v1/contest/2/?format=json',
   parse: function(response) {
-    //console.log(response)
+    console.log(response['contest_updates'])
     var target = response['contest_updates'], results = [];
     for(var i = 0, len = target.length; i< len; i++) {
       var attr = {};

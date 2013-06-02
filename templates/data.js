@@ -1,9 +1,4 @@
-categories = {
-  1: "Communications",
-  2: "Coding Quality"
-  3: "Attitude",
-  4: "Others"
-}
+
 
 /*
 var commentsData = [

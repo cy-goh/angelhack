@@ -5,17 +5,32 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.min.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}css/utility.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/style-light.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/glyphicons.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/index.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/developer.css">
+  
   <script src="{{ STATIC_URL }}js/jquery.js"></script>
   <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
   <script src="{{ STATIC_URL }}js/underscore.js"></script>
   <script src="{{ STATIC_URL }}js/backbone.js"></script>  
   <script src="{{ STATIC_URL }}js/helper.js"></script>
   <script src="{{ STATIC_URL }}js/accounting.js"></script>
+  <script src="{{ STATIC_URL }}js/jtruncate.js"></script>
+  <script>
+    categories = {
+      1: "Communications",
+      2: "Coding Quality",
+      3: "Attitude",
+      4: "Others"
+    };
+  </script>
 </head>
 <body>
 
     Contest title is {{ contest.title }}
     
+
     {% for c in contestants %}
     {{ c.contestant.first_name }} {{ c.contestant.last_name }}
         {% for comment in c.comments %}
@@ -24,10 +39,138 @@
         {% endfor %}
     {% endfor %}
 
+
+
+    <!-- Main Container Fluid -->
+  <div class="container-fluid fixed menu-left">
+    
+    <!-- Top navbar (note: add class "navbar-hidden" to close the navbar by default) -->
+    <div class="navbar main hidden-print">
+  
+    
+        <!-- Sidebar menu & content wrapper -->
+    <div id="wrapper">
+    
+    <!-- Sidebar Menu -->
+    <div id="menu" class="hidden-phone hidden-print">
+    
+      <!-- Brand -->
+      <a href="/" class="appbrand">Project CKTang <span>Profile</span></a>
+    
+      <!-- Scrollable menu wrapper with Maximum height -->
+      <div class="slim-scroll" data-scroll-height="800px">
+      
+      <!-- Sidebar Profile -->
+      <span class="profile">
+        <p>Welcome <a href="my_account.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light"> {{ user.username }} </a></p>
+        <a class="img" href="my_account.html?lang=en&amp;layout_type=fixed&amp;menu_position=menu-left&amp;style=style-light"><img src="{{ user.userprofile.profile_image.url }}" alt="Avatar" /></a>
+        <span>
+          <ul>
+            <li><a href="{% url 'main.views.auth_logout' %}" class="glyphicons eject"><i></i>Logout</a></li>
+          </ul>
+        </span>
+      </span>
+      <!-- // Sidebar Profile END -->
+            
+            
+            
+      </div>
+      <!-- // Scrollable Menu wrapper with Maximum Height END -->
+      
+    </div>
+    <!-- // Sidebar Menu END -->
+        
+    <!-- Content -->
+    <div id="content">
+      <h2>Project CKTang <span><b>The way</b> to hire startup engineers</span></h2>
+      
+      <div class="row-fluid" id="header"></div>
+      <div class='separator-line'></div>
+
+      <div class="row-fluid">
+      <div class="span6">
+  
+        <!-- Chat -->
+        <div class="widget widget-chat margin-none">
+        
+          <div class="widget-head">
+            <h4 class="heading">Chat</h4>
+          </div>
+          <div class="widget-body">
+          
+          <!-- Slim Scroll -->
+          <div class="slim-scroll chat-items" data-scroll-height="222px" id='commentBox'>
+            
+
+          <!-- // Slim Scroll END -->
+          
+          </div>
+          
+          <div class="chat-controls">
+            <div class="innerLR">
+              <form class="margin-none">
+                <div class="row-fluid">
+                  <div class="span10">
+                    <input type="text" name="message" class="input-block-level margin-none" placeholder="Type your message .." />
+                  </div>
+                  <div class="span2">
+                    <button type="submit" class="btn btn-block btn-inverse">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+        </div>
+        <!-- // Chat END -->      
+
+    </div>
+    </div>
+
+  </div>
+
+    <div id="footer" class="hidden-print">      
+      <!--  Copyright Line -->
+      <div class="copy">&copy; 2013 - <a href="/">Project CKTang</a> - All Rights Reserved. </div>
+      <!--  End Copyright Line -->
+    
+    </div>
+    <!-- // Footer END -->
+  </div>
+    <script type='text/template' id='commentBoxTemplate'>
+      <!-- Media item -->
+
+        <div class="media-object thumb"><img data-src="holder.js/51x51" alt="Image"></div>
+        <div class="media-body">
+          <blockquote>
+            <small><%= model.givenByName %> 
+            <%= model.points > 0 ? "gave" : "took away" %> 
+            <%= Math.abs(model.points) %> 
+            <%= model.points > 1 ? "points" : "point" %> 
+            for <%= categories[model.category] %>on <cite><%= model.dateAdded %></cite></small>
+            <p id='text'><%= model.text %></p>
+          </blockquote>
+        </div>
+      </div>        
+    </script>
+
+    <script src="{{ STATIC_URL }}js/models/developer.js"></script>
+    <script src="{{ STATIC_URL }}js/models/comment.js"></script>
+    <script src="{{ STATIC_URL }}js/models/company.js"></script>
+
+    <script src="{{ STATIC_URL }}js/collections/developers.js"></script>
+    <script src="{{ STATIC_URL }}js/collections/comments.js"></script>
+    
+    <script src="{{ STATIC_URL }}js/views/app.js"></script>
+    <script src="{{ STATIC_URL }}js/views/contestcomments.js"></script>
+
+
+
     <script>
+      var app = app || {};
       $(function() {
         $('#dialog-form').dialog({
-          autoOpen: true,
+          autoOpen: false,
           height: 500,
           width: 500,
           modal: true,
@@ -47,6 +190,10 @@
             }
           }]
         });
+
+        app.comments = new app.Comments();
+        new app.ContestCommentsView({collection: app.comments,
+          givenTo: 1});
       })
   </script>
 

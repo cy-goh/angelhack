@@ -2,3 +2,8 @@
   overflow: auto;
   max-height: 150px;
 }
+
+.developer {
+  overflow: auto;
+  height: 300px;
+}

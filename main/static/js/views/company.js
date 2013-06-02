@@ -11,7 +11,16 @@ app.CompanyView = Backbone.View.extend({
     var that = this;
     this.model.fetch({success: function() {
       that.render();
-      app.companyRepresentativesList = that.model.get('companyRepresentatives');
+
+      $('#task').jTruncate({
+        length: 190,
+        minTrail: 0,
+        moreText: 'Read More',
+        lessText: 'Read Less',
+        ellipsisText: '...'
+      })
+      
+      
     }})
   }, 
 
